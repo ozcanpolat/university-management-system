@@ -37,7 +37,7 @@ public class Course {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @ManyToOne
+    @ManyToMany
     @JoinTable(
             name = "course_instructor",
             schema = "university_management",

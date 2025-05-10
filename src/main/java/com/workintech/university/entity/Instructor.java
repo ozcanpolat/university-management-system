@@ -1,5 +1,6 @@
 package com.workintech.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -24,12 +25,15 @@ public class Instructor {
     @NotEmpty
     @Size(max = 100)
     @Column(name = "first_name")
+    @JsonProperty(value = "first_name")
     private String firstName;
 
     @NotNull
     @NotEmpty
     @Size(max = 70)
     @Column(name = "last_name")
+    @JsonProperty(value = "last_name")
+
     private String lastName;
 
     @Email
@@ -37,10 +41,11 @@ public class Instructor {
     private String email;
 
     @Column(name = "phone_number")
+    @JsonProperty(value = "phone_number")
     @Size(max = 20)
     private String phoneNumber;
 
-    @ManyToOne
+    @ManyToMany
     @JoinTable(
             name = "course_instructor",
             schema = "university_management",
