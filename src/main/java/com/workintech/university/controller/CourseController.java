@@ -5,8 +5,10 @@ import com.workintech.university.dto.CourseRequestDto;
 import com.workintech.university.dto.CourseResponseDto;
 import com.workintech.university.dto.InstructorResponseDto;
 import com.workintech.university.entity.Course;
+
 import com.workintech.university.entity.Instructor;
 import com.workintech.university.service.CourseService;
+import com.workintech.university.service.InstructorService;
 import jakarta.validation.constraints.Positive;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,12 @@ import java.util.List;
 @Slf4j
 public class CourseController {
     private final CourseService courseService;
+    private final InstructorService instructorService;
 
     @Autowired
-    public CourseController(CourseService courseService){
+    public CourseController(CourseService courseService, InstructorService instructorService){
         this.courseService=courseService;
+        this.instructorService=instructorService;
     }
 
     @GetMapping
@@ -118,4 +122,25 @@ public class CourseController {
                 ))
                 .toList();
     }
+
+    @PatchMapping("/{courseId}/instructors/{instructorId}")
+    public CourseResponseDto assignInstructorToourse(@Positive @PathVariable("courseId") Long courseId,
+                                                     @Positive @PathVariable("instructorId") Long instructorId){
+        Course course = courseService.findById(courseId);
+
+        Instructor instructor = instructorService.findById(instructorId);
+
+        course.addInstructor(instructor);
+
+        courseService.update(courseId, course);
+
+        return new CourseResponseDto(
+                course.getName(),
+                course.getCode(),
+                course.getCredit(),
+                course.getDepartment() == null ? "" : course.getDepartment().getName()
+        );
+    }
+
+    //PUT/courses/courseId/instructors [1,2,3]
 }

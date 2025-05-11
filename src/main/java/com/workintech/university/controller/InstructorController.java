@@ -1,6 +1,7 @@
 package com.workintech.university.controller;
 
 import com.workintech.university.entity.Instructor;
+import com.workintech.university.service.CourseService;
 import com.workintech.university.service.InstructorService;
 
 import jakarta.validation.constraints.Positive;
@@ -17,10 +18,12 @@ import java.util.List;
 @Slf4j
 public class InstructorController {
     private final InstructorService instructorService;
+    private final CourseService courseService;
 
     @Autowired
-    public InstructorController(InstructorService instructorService){
+    public InstructorController(InstructorService instructorService, CourseService courseService){
         this.instructorService = instructorService;
+        this.courseService=courseService;
     }
 
     @GetMapping
@@ -56,4 +59,8 @@ public class InstructorController {
     public void deleteById(@Positive @PathVariable Long id){
         instructorService.deleteById(id);
     }
+
+
+
+
 }
