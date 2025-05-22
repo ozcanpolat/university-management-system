@@ -38,7 +38,7 @@ public class User implements UserDetails {
     )
     @JoinTable(
             name = "user_role",
-            schema = "university_management",
+            schema = "university-management",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )

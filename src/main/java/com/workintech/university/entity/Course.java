@@ -40,7 +40,7 @@ public class Course {
     @ManyToMany
     @JoinTable(
             name = "course_instructor",
-            schema = "university_management",
+            schema = "university-management",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "instructor_id")
     )
